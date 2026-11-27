@@ -1,0 +1,165 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#071426">
+<title>RNS AI</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;
+ font-family:Arial,sans-serif;
+ background:#071426;
+ color:#fff;
+ min-height:100vh;
+}
+.app{display:flex;min-height:100vh}
+.sidebar{
+ width:250px;background:#091a30;
+ padding:25px 18px;
+ border-right:1px solid #173650;
+}
+.logo{font-size:27px;font-weight:bold;color:#35d9ff}
+.logo span{color:white}
+.sub{font-size:10px;letter-spacing:3px;color:#7896b4;margin-top:7px}
+.new{
+ margin-top:35px;width:100%;padding:13px;
+ border:1px solid #167da5;border-radius:9px;
+ background:#102b43;color:#fff;font-size:14px;
+}
+.main{flex:1;display:flex;flex-direction:column;min-width:0}
+header{
+ padding:20px 25px;border-bottom:1px solid #173650;
+ display:flex;justify-content:space-between;align-items:center;
+}
+.status{font-size:12px;color:#39d9a5}
+.content{
+ flex:1;display:flex;flex-direction:column;
+ align-items:center;justify-content:center;
+ padding:25px 18px;
+}
+.welcome{text-align:center;max-width:650px}
+.symbol{
+ width:65px;height:65px;border:1px solid #20bce9;
+ border-radius:18px;display:grid;place-items:center;
+ margin:0 auto 25px;color:#38d9ff;
+ font-size:28px;box-shadow:0 0 30px #087ca544;
+}
+h1{font-size:35px;margin:0 0 12px}
+h1 span{color:#38d9ff}
+.desc{color:#8fa9c2;line-height:1.7;font-size:14px}
+.suggestions{
+ display:grid;grid-template-columns:1fr 1fr;
+ gap:12px;margin-top:35px;width:100%;
+}
+.suggestion{
+ text-align:left;background:#0d2037;
+ border:1px solid #193b55;border-radius:11px;
+ padding:15px;color:#d8e9f8;font-size:13px;
+}
+.chat{width:100%;max-width:700px;margin-top:25px}
+.messages{width:100%;max-width:700px;margin-bottom:20px}
+.message{
+ padding:13px 16px;border-radius:12px;
+ margin:10px 0;line-height:1.5;font-size:14px;
+ background:#102b43;
+}
+.user{background:#123b54;margin-left:30px}
+.composer{
+ display:flex;gap:10px;width:100%;
+ background:#10243b;border:1px solid #24506b;
+ padding:10px;border-radius:14px;
+}
+input{
+ flex:1;min-width:0;background:transparent;
+ border:0;outline:0;color:white;font-size:15px;
+}
+button{cursor:pointer}
+.send{
+ border:0;border-radius:10px;background:#12b9e8;
+ color:#061727;padding:12px 18px;font-weight:bold;
+}
+footer{font-size:11px;color:#617e98;text-align:center;margin-top:13px}
+@media(max-width:650px){
+ .sidebar{display:none}
+ header{padding:17px}
+ h1{font-size:29px}
+ .suggestions{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+ <div class="logo">RNS <span>AI</span></div>
+ <div class="sub">PERSONAL INTELLIGENCE</div>
+ <button class="new" onclick="location.reload()">＋ Chat Baru</button>
+ <p style="color:#7896b4;font-size:12px;margin-top:35px">RUANG KERJA</p>
+ <p style="font-size:13px;color:#b7cce0">✦ Asisten AI</p>
+ <p style="font-size:13px;color:#b7cce0">⌘ Coding & Elektronik</p>
+ <p style="font-size:13px;color:#b7cce0">▤ Analisis Dokumen</p>
+</aside>
+
+<main class="main">
+<header>
+ <strong>RNS AI <span style="color:#38d9ff">/</span> Assistant</strong>
+ <span class="status">● Sistem Demo</span>
+</header>
+
+<section class="content">
+ <div class="welcome" id="welcome">
+  <div class="symbol">✦</div>
+  <h1>Selamat datang di <span>RNS AI</span></h1>
+  <p class="desc">
+   Asisten kecerdasan buatan pribadi untuk membantu
+   ide, teknologi, pemrograman, dan berbagai pekerjaanmu.
+  </p>
+  <div class="suggestions">
+   <button class="suggestion" onclick="ask('Bantu saya membuat program Arduino')">⌘ Coding Arduino</button>
+   <button class="suggestion" onclick="ask('Jelaskan cara kerja Wemos D1 Mini')">⚡ Elektronik & Wemos</button>
+   <button class="suggestion" onclick="ask('Bantu saya membuat aplikasi Android')">▣ Membuat aplikasi</button>
+   <button class="suggestion" onclick="ask('Bantu saya mengembangkan sebuah ide')">✧ Kembangkan ide</button>
+  </div>
+ </div>
+ <div class="chat">
+  <div class="messages" id="messages"></div>
+  <div class="composer">
+   <input id="prompt" placeholder="Tanyakan sesuatu kepada RNS AI..."
+    onkeydown="if(event.key==='Enter')send()">
+   <button class="send" onclick="send()">Kirim ↑</button>
+  </div>
+  <footer>RNS AI · Asisten pribadi digital</footer>
+ </div>
+</section>
+</main>
+</div>
+
+<script>
+function ask(text){
+ document.getElementById('prompt').value=text;
+ send();
+}
+function send(){
+ const input=document.getElementById('prompt');
+ const value=input.value.trim();
+ if(!value)return;
+ const messages=document.getElementById('messages');
+ document.getElementById('welcome').style.display='none';
+
+ const user=document.createElement('div');
+ user.className='message user';
+ user.textContent=value;
+ messages.appendChild(user);
+
+ const reply=document.createElement('div');
+ reply.className='message';
+ reply.textContent='RNS AI masih dalam tahap pengembangan. Sambungan ke model AI akan kita aktifkan pada tahap berikutnya.';
+ messages.appendChild(reply);
+
+ input.value='';
+}
+</script>
+</body>
+</html>
