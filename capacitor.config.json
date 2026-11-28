@@ -1,5 +1,5 @@
 {
   "appId": "com.rns.ai",
   "appName": "RNS AI",
-  "webDir": "www"
+  "webDir": "public"
 }
